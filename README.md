@@ -1,4 +1,4 @@
-# Guidance for Retail Analytics with Generative AI on AWS
+# Guidance for Creating Player Insights with Generative Business Intelligence on AWS
 
 ## Introduction
 
