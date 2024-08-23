@@ -1,215 +1,232 @@
-# Guidance Title (required)
+# Guidance for Retail Analytics with Generative AI on AWS
 
-The Guidance title should be consistent with the title established first in Alchemy.
+## Introduction
 
-**Example:** *Guidance for Product Substitutions on AWS*
+A NLQ(Natural Language Query) guidance using Amazon Bedrock, Amazon OpenSearch with RAG technique for Retail Analytics.
 
-This title correlates exactly to the Guidance it’s linked to, including its corresponding sample code repository. 
+![Screenshot](./assets/aws_architecture.png)
+
+This data showcased how we used this guidance to generate SQL statements in analyzing online retail customer behavior data. Use the steps in [Next Steps](#next-steps) to configure the data in ```./assets/data/init_mysql_db.sql```
+
+We can then ask questions like:
+1. What are the most frequently purchased products in a specific category?
+2. How often do customers abandon their shopping carts before completing a purchase?
+3. What is the average order value on the website?
+4. What is the average time spent by a user on the website before making a purchase?
+5. How many customers return to make a second purchase within a specific time frame?
 
 
-## Table of Content (required)
-
-List the top-level sections of the README template, along with a hyperlink to the specific section.
-
-### Required
-
-1. [Overview](#overview-required)
+## Table of Content
+1. [Overview](#overview)
     - [Cost](#cost)
-2. [Prerequisites](#prerequisites-required)
-    - [Operating System](#operating-system-required)
-3. [Deployment Steps](#deployment-steps-required)
-4. [Deployment Validation](#deployment-validation-required)
-5. [Running the Guidance](#running-the-guidance-required)
-6. [Next Steps](#next-steps-required)
-7. [Cleanup](#cleanup-required)
+2. [Prerequisites](#prerequisites)
+    - [Operating System](#operating-system)
+3. [Deployment Steps](#deployment-steps)
+4. [Deployment Validation](#deployment-validation)
+5. [Running the Guidance](#running-the-guidance)
+6. [Next Steps](#next-steps)
+7. [Cleanup](#cleanup)
 
-***Optional***
+## Overview
+This is a comprehensive framework designed to enable Generative BI capabilities on customized data sources (RDS/Redshift) hosted on AWS. It offers the following key features:
+- Text-to-SQL functionality for querying customized data sources using natural language.
+- User-friendly interface for adding, editing, and managing data sources, tables, and column descriptions.
+- Performance enhancement through the integration of historical question-answer ranking and entity recognition.
+- Customize business information, including entity information, formulas, SQL samples, and analysis ideas for complex business problems.
+- Add agent task splitting function to handle complex attribution analysis problems.
+- Intuitive question-answering UI that provides insights into the underlying Text-to-SQL mechanism.
+- Simple agent design interface for handling complex queries through a conversational approach.
 
-8. [FAQ, known issues, additional considerations, and limitations](#faq-known-issues-additional-considerations-and-limitations-optional)
-9. [Revisions](#revisions-optional)
-10. [Notices](#notices-optional)
-11. [Authors](#authors-optional)
+### Cost
 
-## Overview (required)
+As of May, 2024, the cost for running this Guidance with the default settings in the _us-west-2_ is approximately $1337.8 per month for processing 2000 requests.
 
-1. Provide a brief overview explaining the what, why, or how of your Guidance. You can answer any one of the following to help you write this:
-
-    - **Why did you build this Guidance?**
-    - **What problem does this Guidance solve?**
-
-2. Include the architecture diagram image, as well as the steps explaining the high-level overview and flow of the architecture. 
-    - To add a screenshot, create an ‘assets/images’ folder in your repository and upload your screenshot to it. Then, using the relative file path, add it to your README. 
-
-### Cost ( required )
-
-This section is for a high-level cost estimate. Think of a likely straightforward scenario with reasonable assumptions based on the problem the Guidance is trying to solve. Provide an in-depth cost breakdown table in this section below ( you should use AWS Pricing Calculator to generate cost breakdown ).
-
-Start this section with the following boilerplate text:
-
-_You are responsible for the cost of the AWS services used while running this Guidance. As of <month> <year>, the cost for running this Guidance with the default settings in the <Default AWS Region (Most likely will be US East (N. Virginia)) > is approximately $<n.nn> per month for processing ( <nnnnn> records )._
-
-Replace this amount with the approximate cost for running your Guidance in the default Region. This estimate should be per month and for processing/serving resonable number of requests/entities.
-
-Suggest you keep this boilerplate text:
-_We recommend creating a [Budget](https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html) through [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) to help manage costs. Prices are subject to change. For full details, refer to the pricing webpage for each AWS service used in this Guidance._
-
-### Sample Cost Table ( required )
-
-**Note : Once you have created a sample cost table using AWS Pricing Calculator, copy the cost breakdown to below table and upload a PDF of the cost estimation on BuilderSpace. Do not add the link to the pricing calculator in the ReadMe.**
+### Sample Cost Table
 
 The following table provides a sample cost breakdown for deploying this Guidance with the default parameters in the US East (N. Virginia) Region for one month.
 
-| AWS service  | Dimensions | Cost [USD] |
+| AWS service  | Dimensions | Cost [USD] per Month |
 | ----------- | ------------ | ------------ |
-| Amazon API Gateway | 1,000,000 REST API calls per month  | $ 3.50month |
-| Amazon Cognito | 1,000 active users per month without advanced security feature | $ 0.00 |
+| Amazon ECS | v0.75 CPU 5GB | $804.1 |
+| Amazon DynamoDB | 25 provisioned write & read capacity units per month | $ 14.04 |
+| Amazon Bedrock | 2000 requests per month, with each request consuming 10000 input tokens and 1000 output tokens | $ 416.00 |
+| Amazon OpenSearch Service | 1 domain with m5.large.search | $ 103.66 |
 
-## Prerequisites (required)
+## Prerequisites
 
-### Operating System (required)
+### Operating System
+“CDK are optimized to best work to be initiated on **<Amazon Linux 2023 AMI>**.  Deployment in another OS may require additional steps.”
 
-- Talk about the base Operating System (OS) and environment that can be used to run or deploy this Guidance, such as *Mac, Linux, or Windows*. Include all installable packages or modules required for the deployment. 
-- By default, assume Amazon Linux 2/Amazon Linux 2023 AMI as the base environment. All packages that are not available by default in AMI must be listed out.  Include the specific version number of the package or module.
+### AWS account requirements
 
-**Example:**
-“These deployment instructions are optimized to best work on **<Amazon Linux 2 AMI>**.  Deployment in another OS may require additional steps.”
-
-- Include install commands for packages, if applicable.
-
-
-### Third-party tools (If applicable)
-
-*List any installable third-party tools required for deployment.*
-
-
-### AWS account requirements (If applicable)
-
-*List out pre-requisites required on the AWS account if applicable, this includes enabling AWS regions, requiring ACM certificate.*
-
-**Example:** “This deployment requires you have public ACM certificate available in your AWS account”
-
-**Example resources:**
-- ACM certificate 
-- DNS record
-- S3 bucket
 - VPC
 - IAM role with specific permissions
-- Enabling a Region or service etc.
+- Amazon Bedrock
+- Amazon ECS
+- Amazon DynamoDB
+- Amazon Cognito
+- Amazon OpenSearch Service
+- Amazon Elastic Load Balancing
+- Amazon SageMaker (Optional, if you need customized models to be deployed)
+- Amazon Secrets Manager
 
+### Supported Regions
 
-### aws cdk bootstrap (if sample code has aws-cdk)
+us-west-2, us-east-2, us-east-1, ap-south-1, ap-southeast-1, ap-southeast-2, ap-northeast-1, eu-central-1, eu-west-1, eu-west-3, or any other region that supports the services (bedrock) used in the Guidance.
 
-<If using aws-cdk, include steps for account bootstrap for new cdk users.>
+## Deployment Steps
 
-**Example blurb:** “This Guidance uses aws-cdk. If you are using aws-cdk for first time, please perform the below bootstrapping....”
+### 1. Prepare CDK Pre-requisites
+Please follow the instructions in the [CDK Workshop](https://cdkworkshop.com/15-prerequisites.html) to install the CDK toolkit. Make sure your environment have the authorization to create the resources.
 
-### Service limits  (if applicable)
+### 2. Set a password for the Streamlit Web UI
 
-<Talk about any critical service limits that affect the regular functioning of the Guidance. If the Guidance requires service limit increase, include the service name, limit name and link to the service quotas page.>
+The default password is [Empty] for Streamlit Web UI. If you need to set a password for the Streamlit Web UI, you can update the password in the
+```application/config_files/stauth_config.yaml```
 
-### Supported Regions (if applicable)
+for example 
 
-<If the Guidance is built for specific AWS Regions, or if the services used in the Guidance do not support all Regions, please specify the Region this Guidance is best suited for>
+```yaml
+credentials:
+  usernames:
+    jsmith:
+      email: jsmith@gmail.com
+      name: John Smith
+      password: XXXXXX # To be replaced with hashed password
+    rbriggs:
+      email: rbriggs@gmail.com
+      name: Rebecca Briggs
+      password: XXXXXX # To be replaced with hashed password
+cookie:
+  expiry_days: 30
+  key: random_signature_key # Must be string
+  name: random_cookie_name
+preauthorized:
+  emails:
+  - melsby@gmail.com
+```
 
+change the password 'XXXXXX' to hashed password
 
-## Deployment Steps (required)
+Use the python code below to generate XXXXXX. We need python 3.8 and up to run the code below:
+```python
+from streamlit_authenticator.utilities.hasher import Hasher
+hashed_passwords = Hasher(['password123']).generate()
+```
 
-Deployment steps must be numbered, comprehensive, and usable to customers at any level of AWS expertise. The steps must include the precise commands to run, and describe the action it performs.
+### 3. Deploy the CDK Stack
+For global regions, execute the following commands:
 
-* All steps must be numbered.
-* If the step requires manual actions from the AWS console, include a screenshot if possible.
-* The steps must start with the following command to clone the repo. ```git clone xxxxxxx```
-* If applicable, provide instructions to create the Python virtual environment, and installing the packages using ```requirement.txt```.
-* If applicable, provide instructions to capture the deployed resource ARN or ID using the CLI command (recommended), or console action.
+Navigate to the CDK project directory:
+```
+cd generative-bi-using-rag/source/resources
+```
+Deploy the CDK stack, change the region to your own region if needed, for example, us-west-2, us-east-1, etc.:
+```
+export AWS_DEFAULT_REGION=us-west-1
+cdk bootstrap
+cdk deploy GenBiMainStack
+```
+You will see the following when deployed succeeded
+```
+GenBiMainStack.AOSDomainEndpoint = XXXXX.us-west-2.es.amazonaws.com
+GenBiMainStack.APIEndpoint = XXXXX.us-west-2.elb.amazonaws.com
+GenBiMainStack.FrontendEndpoint = XXXXX.us-west-2.elb.amazonaws.com
+GenBiMainStack.StreamlitEndpoint = XXXXX.us-west-2.elb.amazonaws.com
+```
+## Deployment Validation
 
- 
-**Example:**
+Please go to FrontendEndpoint and StreamlitEndpoint to see if the endpoints function well.
 
-1. Clone the repo using command ```git clone xxxxxxxxxx```
-2. cd to the repo folder ```cd <repo-name>```
-3. Install packages in requirements using command ```pip install requirement.txt```
-4. Edit content of **file-name** and replace **s3-bucket** with the bucket name in your account.
-5. Run this command to deploy the stack ```cdk deploy``` 
-6. Capture the domain name created by running this CLI command ```aws apigateway ............```
+## Running the Guidance 
 
+After the CDK stack is deployed, wait around 40 minutes for the initialization to complete. Then, open the Admin Web UI in your browser: https://your-public-dns
 
+1. **Create Data Connection**
+   Mainly introduces how to connect to the database.
+   - Select the `Data_Connection_Management` page.
+   <img width="696" alt="image" src="https://github.com/aws-samples/generative-bi-using-rag/assets/12369067/c12eebde-5474-4322-bee6-3677908dc5c5">
+   - Click `Test Connection` to test the database connection.
+   - Click `Add Connection` to create a new database connection.
 
-## Deployment Validation  (required)
+2. **Background**
 
-<Provide steps to validate a successful deployment, such as terminal output, verifying that the resource is created, status of the CloudFormation template, etc.>
+   After creating the database connection, you can select different tables from the database to create different Data Profiles.
 
+3. **Create Data Profile**
+   - Click `Data_Profile_Management`.
+   <img width="728" alt="image" src="https://github.com/aws-samples/generative-bi-using-rag/assets/12369067/f5a35306-0d64-4d85-99a9-c95e6d510fc3">
+     - Fill in the `Data Profile Name`.
+     - Select the database connection.
+     - Select the relevant data table.
+     - Click `Create Data Profile`.
 
-**Examples:**
+4. **Create Schema Description**
+   After creating a Data Profile, to help the large language model better understand the data tables, it is necessary to add relevant descriptions to the schema of the data tables.
+   The more detailed the description of the schema, the better. For some fields, try to provide as much detail as possible, including example data, synonyms, operations used in calculations, etc.
+   For example:
+     - Time field: provide the time format.
+     - Boolean field: indicate whether the data is 1/0 or True/False.
+   To create a Schema Description:
+   - Click `Schema_Description_Management`.
 
-* Open CloudFormation console and verify the status of the template with the name starting with xxxxxx.
-* If deployment is successful, you should see an active database instance with the name starting with <xxxxx> in        the RDS console.
-*  Run the following CLI command to validate the deployment: ```aws cloudformation describe xxxxxxxxxxxxx```
+   Table annotation: description of the data table.
+   - Name: name of the field (automatically extracted by the system).
+   - Datatype: description of the data type of the field (automatically extracted by the system).
+   - Comment: explanation of the field, interpretation of the field's meaning.
+   - Annotation: synonyms or other notes for the field, example data for the field (including common data examples), and instructions for operations on the field, such as using sum, count, etc.
 
+5. **Modify Prompts**
+   For different industries, it is necessary to adjust the Prompts accordingly.
 
+   <img width="651" alt="image" src="https://github.com/aws-samples/generative-bi-using-rag/assets/12369067/653599c6-9199-42f4-8da5-bf734119446c">
 
-## Running the Guidance (required)
+   - Intent Prompt
+     - Mainly for intent recognition. Currently, there are four main types of intents: knowledge base intent, data query intent, refusal query intent, and chain of thought intent.
+   - Knowledge Prompt
+     - When a knowledge base intent is recognized, it answers related knowledge base questions. Currently, this is implemented through PE, and later this query can be connected to a knowledge base solution.
+   - Text2SQL Prompt
+     - The key Prompt for Text2SQL.
+   - Data Summary Prompt
+     - The main Prompt for data summarization, providing data to the LLM to generate summary text.
+   - Data Visualization Prompt
+     - Using the LLM to select appropriate visualization charts.
+   - Agent Task Prompt
+     - Using the understanding ability of the LLM combined with business knowledge to break down complex business problems into multiple dimensional sub-tasks.
+   - Agent Data Analyse Prompt
+     - For complex business problems, after breaking them down into multiple sub-tasks, each sub-task involves data queries. After the queries are completed, the data and questions are given to the LLM for data analysis.
+   - Suggest Question Prompt
+     - Generating suggested questions based on the user's query.
 
-<Provide instructions to run the Guidance with the sample data or input provided, and interpret the output received.> 
+6. **Add Business Knowledge**
+   Since the large language model may lack relevant industry knowledge, it is necessary to supplement it with relevant business knowledge.
 
-This section should include:
+   Add business entity information:
+   - Click `Entity_Management`.
 
-* Guidance inputs
-* Commands to run
-* Expected output (provide screenshot if possible)
-* Output description
+   ![image](https://github.com/aws-samples/generative-bi-using-rag/assets/12369067/8aa6446d-e520-4d76-9139-579a2db09bbe)
 
+   - Entity: mainly write the name of the entity.
+   - Comment: mainly write the explanation of the entity, such as which field the entity needs to query, what the value of the entity is in the table, the calculation logic of specific formulas, explanations of business names, etc.
 
+   Add sample question SQL information:
+   - Click `Index_Management`.
 
-## Next Steps (required)
+   ![image](https://github.com/aws-samples/generative-bi-using-rag/assets/12369067/9e8bf49c-02d5-430e-b857-0c2afcfae78a)
 
-Provide suggestions and recommendations about how customers can modify the parameters and the components of the Guidance to further enhance it according to their requirements.
+   - Question: mainly the user's question.
+   - Answer (SQL): mainly the query SQL for the question.
 
+   Add analysis ideas for complex questions:
+   - Click `Agent_Cot_Management`.
 
-## Cleanup (required)
+   ![image](https://github.com/aws-samples/generative-bi-using-rag/assets/12369067/6ff79825-328e-4d9c-bc16-a0b1da654621)
 
-- Include detailed instructions, commands, and console actions to delete the deployed Guidance.
-- If the Guidance requires manual deletion of resources, such as the content of an S3 bucket, please specify.
+   - Query: user's complex business question.
+   - Comment: analysis ideas for the question, in dict structure, where the key is task_1, task_2, ..., and the value is the sub-tasks for the question.
 
-
-
-## FAQ, known issues, additional considerations, and limitations (optional)
-
-
-**Known issues (optional)**
-
-<If there are common known issues, or errors that can occur during the Guidance deployment, describe the issue and resolution steps here>
-
-
-**Additional considerations (if applicable)**
-
-<Include considerations the customer must know while using the Guidance, such as anti-patterns, or billing considerations.>
-
-**Examples:**
-
-- “This Guidance creates a public AWS bucket required for the use-case.”
-- “This Guidance created an Amazon SageMaker notebook that is billed per hour irrespective of usage.”
-- “This Guidance creates unauthenticated public API endpoints.”
-
-
-Provide a link to the *GitHub issues page* for users to provide feedback.
-
-
-**Example:** *“For any feedback, questions, or suggestions, please use the issues tab under this repo.”*
-
-## Revisions (optional)
-
-Document all notable changes to this project.
-
-Consider formatting this section based on Keep a Changelog, and adhering to Semantic Versioning.
-
-## Notices (optional)
-
-Include a legal disclaimer
-
-**Example:**
-*Customers are responsible for making their own independent assessment of the information in this Guidance. This Guidance: (a) is for informational purposes only, (b) represents AWS current product offerings and practices, which are subject to change without notice, and (c) does not create any commitments or assurances from AWS and its affiliates, suppliers or licensors. AWS products or services are provided “as is” without warranties, representations, or conditions of any kind, whether express or implied. AWS responsibilities and liabilities to its customers are controlled by AWS agreements, and this Guidance is not part of, nor does it modify, any agreement between AWS and its customers.*
-
-
-## Authors (optional)
-
-Name of code contributors
+## Cleanup 
+- Delete the CDK stack:
+```
+cdk destroy GenBiMainStack
+```
