@@ -2,11 +2,11 @@
 
 ## Introduction
 
-A NLQ(Natural Language Query) guidance using Amazon Bedrock, Amazon OpenSearch with RAG technique for Retail Analytics.
+This guidance demonstrates how to use natural language to chat with gaming BI system and generate data analytic result. This guidance will generate SQL directly or provide reference SQL through RAG (Text-to-SQL) , conduct the data query or generate different analyze charts for business insight. The core service is Amazon Bedrock or Amazon SageMaker that host LLM.
 
 ![Screenshot](./assets/aws_architecture.png)
 
-This data showcased how we used this guidance to generate SQL statements in analyzing online retail customer behavior data. Use the steps in [Next Steps](#next-steps) to configure the data in ```./assets/data/init_mysql_db.sql```
+This data showcased how we used this guidance to generate SQL statements in analyzing gaming operational data. Use the steps in [Next Steps](#next-steps) to configure the data in ```./assets/data/init_mysql_db.sql```
 
 We can then ask questions like:
 1. What are the most frequently purchased products in a specific category?
@@ -39,7 +39,7 @@ This is a comprehensive framework designed to enable Generative BI capabilities 
 
 ### Cost
 
-As of May, 2024, the cost for running this Guidance with the default settings in the _us-west-2_ is approximately $1337.8 per month for processing 2000 requests.
+As of July, 2024, the cost for running this Guidance with the default settings in the _us-west-2_ is approximately $1337.8 per month for processing 2000 requests.
 
 ### Sample Cost Table
 
