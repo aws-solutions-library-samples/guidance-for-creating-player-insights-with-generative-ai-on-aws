@@ -4,7 +4,7 @@
 
 This guidance demonstrates how to use natural language to chat with gaming BI system and generate data analytic result. This guidance will generate SQL directly or provide reference SQL through RAG (Text-to-SQL) , conduct the data query or generate different analyze charts for business insight. The core service is Amazon Bedrock or Amazon SageMaker that host LLM.
 
-![Screenshot](./assets/architecture_readme.png)
+![Screenshot](./assets/architecture.jpeg)
 
 This data showcased how we used this guidance to generate SQL statements in analyzing gaming operational data. Use the steps in [Next Steps](#next-steps) to configure the data in ```./assets/data/init_mysql_db.sql```
 
