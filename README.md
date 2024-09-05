@@ -1,4 +1,4 @@
-# Guidance for Creating Player Insights with Generative Business Intelligence on AWS
+# Guidance for Creating Player Insights with Generative AI on AWS
 
 ## Introduction
 
