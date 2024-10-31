@@ -15,7 +15,7 @@ export class AOSStack extends cdk.Stack {
 
   constructor(scope: Construct, id: string, props: cdk.StackProps) {
     super(scope, id, props);
-
+    this.templateOptions.description = "Guidance for Creating Player Insights with Generative AI on AWS (SO9554)";
     this._vpc = ec2.Vpc.fromLookup(this, "VPC", {
       isDefault: true,
     });
